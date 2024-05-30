@@ -413,7 +413,7 @@ class NASOSv5_mod3(IStrategy):
         if conditions:
             dataframe.loc[
                 reduce(lambda x, y: x | y, conditions),
-                'sell'
+                'exit_long'
             ]=1
 
         return dataframe
@@ -685,11 +685,11 @@ class TrailingBuyStrat(NASOSv5_mod3):
             dataframe.log[
                 (dataframe['trailing_buy'] == 1) &
                 (dataframe['trailing_buy_count'] == 1)
-            , 'buy'] = 1
+            , 'enter_long'] = 1
         else: # No but trailing
             dataframe.loc[
                 (dataframe['pre_buy'] == 1)
-            , 'buy'] = 1
+            , 'enter_long'] = 1
         return dataframe
 
     def get_current_price(self, pair: str) -> float:
